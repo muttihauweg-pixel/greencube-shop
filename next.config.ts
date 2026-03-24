@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export",
   distDir: "docs",
-  assetPrefix: ".",
+  assetPrefix: "/greencube-shop/",
   images: {
     unoptimized: true,
   },
