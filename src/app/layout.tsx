@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GreenCube Shop - Premium Hanfstecklinge",
-  description: "Premium Hanfstecklinge Shop mit 25 Sorten. Hochwertige Stecklinge direkt vom Züchter.",
-  keywords: ["Hanfstecklinge", "Cannabis", "Stecklinge", "Hanf", "CBD"],
+  title: "HansHanf - Premium Hanfstecklinge Shop",
+  description: "HansHanf bietet 25+ Premium Hanfstecklinge Sorten. Hochwertige Genetik, diskreter Versand Österreich & Deutschland. Jetzt bestellen!",
+  keywords: ["Hanfstecklinge", "Cannabis Stecklinge", "Hanf Stecklinge", "CBD Stecklinge", "HansHanf", "Premium Genetik", "Österreich", "Deutschland"],
 };
 
 export default function RootLayout({
