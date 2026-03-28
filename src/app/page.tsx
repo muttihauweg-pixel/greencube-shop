@@ -642,7 +642,7 @@ export default function HanfstecklingShop() {
                 <Leaf className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">GreenCube</h1>
+                <h1 className="text-xl font-bold text-white">HansHanf</h1>
                 <p className="text-xs text-emerald-400">Premium Hanfstecklinge</p>
               </div>
             </div>
@@ -1174,7 +1174,7 @@ export default function HanfstecklingShop() {
                   <Leaf className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">GreenCube</h3>
+                  <h3 className="text-xl font-bold text-white">HansHanf</h3>
                   <p className="text-xs text-emerald-400">Premium Hanfstecklinge</p>
                 </div>
               </div>
@@ -1202,7 +1202,7 @@ export default function HanfstecklingShop() {
               <div className="space-y-2 text-sm text-gray-400">
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-emerald-400" />
-                  <span>info@greencube.at</span>
+                  <span>info@hanshanf.at</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-emerald-400" />
@@ -1213,7 +1213,7 @@ export default function HanfstecklingShop() {
           </div>
 
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-            <p>© 2025 GreenCube. Alle Rechte vorbehalten.</p>
+            <p>© 2025 HansHanf. Alle Rechte vorbehalten.</p>
             <p className="mt-2">Nur für Personen ab 18 Jahren. Bitte beachte die gesetzlichen Bestimmungen in deinem Land.</p>
           </div>
         </div>
