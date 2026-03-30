@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HansHanf - Bild Upload System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .upload-area {
+            border: 3px dashed rgba(0, 255, 136, 0.3);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.05);
+        }
+        .upload-icon { font-size: 4em; margin-bottom: 20px; }
+        .upload-text { font-size: 1.2em; color: #888; margin-bottom: 10px; }
+        .upload-hint { font-size: 0.9em; color: #666; }
+        .strain-selector {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .strain-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .strain-item:hover {
+            border-color: rgba(0, 255, 136, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .strain-item.selected {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+        .strain-item.has-image {
+            border-color: #00cc66;
+        }
+        .strain-emoji { font-size: 1.5em; }
+        .strain-name { font-size: 0.95em; }
+        .status-badge {
+            margin-left: auto;
+            font-size: 0.7em;
+            padding: 4px 8px;
+            border-radius: 10px;
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+        .upload-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1em;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            border: none;
+            border-radius: 12px;
+            color: #1a1a2e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+        .upload-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .progress-area {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: none;
+        }
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .instructions {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border-left: 4px solid #00ff88;
+        }
+        .instructions h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+        }
+        .instructions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .instructions li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #aaa;
+        }
+        .instructions li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+        }
+        .hidden-input { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📤 Bild Upload</h1>
+            <p style="color: #888;">Füge professionelle Produktfotos hinzu</p>
+        </div>
+
+        <div class="upload-area" id="dropZone">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">Bilder hierher ziehen oder klicken</div>
+            <div class="upload-hint">Unterstützt: PNG, JPG, WebP (max. 5MB)</div>
+            <input type="file" id="fileInput" class="hidden-input" accept="image/*" multiple>
+        </div>
+
+        <div class="strain-selector" id="strainList">
+            <!-- Wird per JavaScript gefüllt -->
+        </div>
+
+        <button class="upload-btn" id="uploadBtn" disabled>
+            ⬆️ Zum Upload auswählen
+        </button>
+
+        <div class="progress-area" id="progressArea">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span id="progressText">Upload läuft...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Anleitung</h3>
+            <ul>
+                <li>Generiere Bilder mit Midjourney, DALL-E oder Bing Image Creator</li>
+                <li>Prompt: "Professional cannabis buds on white background, photorealistic"</li>
+                <li>Format: 800x800px, weißer Hintergrund</li>
+                <li>Wähle die passende Sorte aus der Liste</li>
+                <li>Bild wird automatisch optimiert und veröffentlicht</li>
+                <li>Shop aktualisiert sich in 2-3 Minuten automatisch</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const strains = [
+            { key: 'ak47', name: 'AK-47', emoji: '🔫', hasImage: false },
+            { key: 'amnesia_haze', name: 'Amnesia Haze', emoji: '🧠', hasImage: false },
+            { key: 'black_cherry_punch', name: 'Black Cherry Punch', emoji: '🍒', hasImage: false },
+            { key: 'blue_dream', name: 'Blue Dream', emoji: '💙', hasImage: false },
+            { key: 'bruce_banner', name: 'Bruce Banner', emoji: '💪', hasImage: false },
+            { key: 'candy_store', name: 'Candy Store', emoji: '🍬', hasImage: false },
+            { key: 'critical_kush', name: 'Critical Kush', emoji: '⭐', hasImage: false },
+            { key: 'dosidos', name: 'Do-Si-Dos', emoji: '🍪', hasImage: false },
+            { key: 'gelato', name: 'Gelato', emoji: '🍨', hasImage: false },
+            { key: 'girl_scout_cookies', name: 'Girl Scout Cookies', emoji: '🍪', hasImage: false },
+            { key: 'gorilla_glue', name: 'Gorilla Glue', emoji: '🦍', hasImage: false },
+            { key: 'granddaddy_purple', name: 'Granddaddy Purple', emoji: '👴', hasImage: false },
+            { key: 'jokerz', name: 'Jokerz', emoji: '🃏', hasImage: false },
+            { key: 'kush_mintz', name: 'Kush Mintz', emoji: '🌿', hasImage: false },
+            { key: 'lemon_haze', name: 'Lemon Haze', emoji: '🍋', hasImage: false },
+            { key: 'northern_lights', name: 'Northern Lights', emoji: '🌌', hasImage: false },
+            { key: 'og_kush', name: 'OG Kush', emoji: '👑', hasImage: false },
+            { key: 'pineapple_express', name: 'Pineapple Express', emoji: '🍍', hasImage: false },
+            { key: 'purple_haze', name: 'Purple Haze', emoji: '🟣', hasImage: false },
+            { key: 'runtz', name: 'Runtz', emoji: '🍭', hasImage: false },
+            { key: 'strawberry_cough', name: 'Strawberry Cough', emoji: '🍓', hasImage: false },
+            { key: 'super_skunk', name: 'Super Skunk', emoji: '🦨', hasImage: false },
+            { key: 'wedding_cake', name: 'Wedding Cake', emoji: '🎂', hasImage: false },
+            { key: 'white_widow', name: 'White Widow', emoji: '⚪', hasImage: false },
+            { key: 'zkittlez', name: 'Zkittlez', emoji: '🌈', hasImage: false }
+        ];
+
+        let selectedStrain = null;
+        let selectedFiles = [];
+
+        // Strain-Liste rendern
+        const strainList = document.getElementById('strainList');
+        strains.forEach(strain => {
+            const item = document.createElement('div');
+            item.className = 'strain-item' + (strain.hasImage ? ' has-image' : '');
+            item.dataset.key = strain.key;
+            item.innerHTML = `
+                <span class="strain-emoji">${strain.emoji}</span>
+                <span class="strain-name">${strain.name}</span>
+                ${strain.hasImage ? '<span class="status-badge">✓ Bild</span>' : ''}
+            `;
+            item.addEventListener('click', () => selectStrain(strain.key, item));
+            strainList.appendChild(item);
+        });
+
+        function selectStrain(key, element) {
+            document.querySelectorAll('.strain-item').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedStrain = key;
+            updateUploadButton();
+        }
+
+        function updateUploadButton() {
+            const btn = document.getElementById('uploadBtn');
+            btn.disabled = !(selectedStrain && selectedFiles.length > 0);
+            if (selectedFiles.length > 0) {
+                btn.textContent = `⬆️ ${selectedFiles.length} Bilder hochladen`;
+            }
+        }
+
+        // Drag & Drop
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            selectedFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+            if (selectedFiles.length > 0) {
+                dropZone.querySelector('.upload-text').textContent = 
+                    `${selectedFiles.length} Bilder ausgewählt`;
+                dropZone.querySelector('.upload-hint').textContent = 
+                    selectedFiles.map(f => f.name).join(', ');
+            }
+            updateUploadButton();
+        }
+
+        // Upload Simulation
+        document.getElementById('uploadBtn').addEventListener('click', () => {
+            if (!selectedStrain || selectedFiles.length === 0) return;
+
+            const progressArea = document.getElementById('progressArea');
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            const progressText = document.getElementById('progressText');
+
+            progressArea.style.display = 'block';
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    progressText.textContent = '✅ Upload erfolgreich!';
+                    setTimeout(() => {
+                        alert('Bilder wurden hochgeladen! Der Shop aktualisiert sich in 2-3 Minuten.');
+                        location.reload();
+                    }, 500);
+                }
+                progressFill.style.width = progress + '%';
+                progressPercent.textContent = Math.round(progress) + '%';
+            }, 200);
+        });
+    </script>
+</body>
+</html>
