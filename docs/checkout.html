@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HansHanf - Checkout</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+        }
+        @media (max-width: 900px) {
+            .checkout-grid { grid-template-columns: 1fr; }
+        }
+        .form-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .section-title {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            color: #00ff88;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .payment-method {
+            flex: 1;
+            min-width: 120px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .payment-method:hover {
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+        .payment-method.selected {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+        .payment-method .icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+        .payment-method .name {
+            font-size: 0.85em;
+            color: #aaa;
+        }
+        .order-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .item-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2d2d44, #1a1a2e);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+        .item-details {
+            flex: 1;
+        }
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .item-qty {
+            font-size: 0.85em;
+            color: #888;
+        }
+        .item-price {
+            font-weight: 600;
+            color: #00ff88;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            color: #aaa;
+        }
+        .summary-row.total {
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
+            padding-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+        }
+        .total-price {
+            color: #00ff88;
+            font-size: 1.3em;
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 18px;
+            margin-top: 25px;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            border: none;
+            border-radius: 12px;
+            color: #1a1a2e;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.85em;
+        }
+        .age-verification {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .age-verification h3 {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #00ff88;
+        }
+        .checkbox-group label {
+            color: #ccc;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .shipping-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .shipping-option:hover {
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+        .shipping-option.selected {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.05);
+        }
+        .shipping-option input {
+            width: 20px;
+            height: 20px;
+            accent-color: #00ff88;
+        }
+        .shipping-info {
+            flex: 1;
+        }
+        .shipping-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .shipping-time {
+            font-size: 0.85em;
+            color: #888;
+        }
+        .shipping-price {
+            font-weight: 600;
+            color: #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛒 Checkout</h1>
+            <p style="color: #888;">Vervollständige deine Bestellung</p>
+        </div>
+
+        <div class="checkout-grid">
+            <div class="form-sections">
+                <!-- Alterverifikation -->
+                <div class="form-section age-verification">
+                    <h3>🔞 Altersverifikation</h3>
+                    <p style="color: #ccc; font-size: 0.9em;">Der Kauf von Hanfstecklingen ist ab 18 Jahren erlaubt.</p>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ageCheck" required>
+                        <label for="ageCheck">
+                            Ich bestätige, dass ich mindestens 18 Jahre alt bin und die 
+                            <a href="#" style="color: #00ff88;">AGB</a> sowie die 
+                            <a href="#" style="color: #00ff88;">Datenschutzerklärung</a> gelesen habe.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Lieferadresse -->
+                <div class="form-section">
+                    <h2 class="section-title">📍 Lieferadresse</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Vorname</label>
+                            <input type="text" placeholder="Max" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nachname</label>
+                            <input type="text" placeholder="Mustermann" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Straße und Hausnummer</label>
+                        <input type="text" placeholder="Musterstraße 123" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>PLZ</label>
+                            <input type="text" placeholder="12345" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ort</label>
+                            <input type="text" placeholder="Berlin" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>E-Mail</label>
+                        <input type="email" placeholder="max@beispiel.de" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Telefon (optional)</label>
+                        <input type="tel" placeholder="+49 123 456789">
+                    </div>
+                </div>
+
+                <!-- Versandoptionen -->
+                <div class="form-section">
+                    <h2 class="section-title">🚚 Versand</h2>
+                    
+                    <div class="shipping-options">
+                        <label class="shipping-option selected">
+                            <input type="radio" name="shipping" value="standard" checked>
+                            <div class="shipping-info">
+                                <div class="shipping-name">Standard Versand</div>
+                                <div class="shipping-time">3-5 Werktage</div>
+                            </div>
+                            <div class="shipping-price">4,90 €</div>
+                        </label>
+
+                        <label class="shipping-option">
+                            <input type="radio" name="shipping" value="express">
+                            <div class="shipping-info">
+                                <div class="shipping-name">Express Versand</div>
+                                <div class="shipping-time">1-2 Werktage</div>
+                            </div>
+                            <div class="shipping-price">9,90 €</div>
+                        </label>
+
+                        <label class="shipping-option">
+                            <input type="radio" name="shipping" value="pickup">
+                            <div class="shipping-info">
+                                <div class="shipping-name">Selbstabholung</div>
+                                <div class="shipping-time">Nach Vereinbarung</div>
+                            </div>
+                            <div class="shipping-price">Kostenlos</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Zahlung -->
+                <div class="form-section">
+                    <h2 class="section-title">💳 Zahlungsmethode</h2>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method selected" data-method="card">
+                            <div class="icon">💳</div>
+                            <div class="name">Karte</div>
+                        </div>
+                        <div class="payment-method" data-method="paypal">
+                            <div class="icon">🅿️</div>
+                            <div class="name">PayPal</div>
+                        </div>
+                        <div class="payment-method" data-method="crypto">
+                            <div class="icon">₿</div>
+                            <div class="name">Crypto</div>
+                        </div>
+                        <div class="payment-method" data-method="bank">
+                            <div class="icon">🏦</div>
+                            <div class="name">Überweisung</div>
+                        </div>
+                    </div>
+
+                    <div id="cardFields">
+                        <div class="form-group">
+                            <label>Kartennummer</label>
+                            <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ablaufdatum</label>
+                                <input type="text" placeholder="MM/JJ" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVC</label>
+                                <input type="text" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bestellübersicht -->
+            <div class="order-summary">
+                <h2 class="section-title">🛍️ Bestellung</h2>
+                
+                <div id="cartItems">
+                    <!-- Wird per JavaScript gefüllt -->
+                </div>
+
+                <div class="summary-row">
+                    <span>Zwischensumme</span>
+                    <span id="subtotal">0,00 €</span>
+                </div>
+                <div class="summary-row">
+                    <span>Versand</span>
+                    <span id="shipping">4,90 €</span>
+                </div>
+                <div class="summary-row">
+                    <span>MwSt. (19%)</span>
+                    <span id="tax">0,00 €</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Gesamtsumme</span>
+                    <span class="total-price" id="total">0,00 €</span>
+                </div>
+
+                <button class="checkout-btn" onclick="placeOrder()">
+                    ✅ Jetzt bestellen
+                </button>
+
+                <div class="secure-badge">
+                    <span>🔒</span>
+                    <span>SSL-verschlüsselte Zahlung</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Beispiel-Warenkorb
+        let cart = [
+            { name: 'Gorilla Glue #4', emoji: '🦍', qty: 2, price: 12.99 },
+            { name: 'OG Kush', emoji: '👑', qty: 1, price: 11.99 },
+            { name: 'Blue Dream', emoji: '💙', qty: 3, price: 10.99 }
+        ];
+
+        let shippingCost = 4.90;
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="item-image">${item.emoji}</div>
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-qty">${item.qty}x Stecklinge</div>
+                    </div>
+                    <div class="item-price">${(item.price * item.qty).toFixed(2)} €</div>
+                </div>
+            `).join('');
+
+            updateTotals();
+        }
+
+        function updateTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const tax = subtotal * 0.19;
+            const total = subtotal + shippingCost + tax;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' €';
+            document.getElementById('tax').textContent = tax.toFixed(2) + ' €';
+            document.getElementById('total').textContent = total.toFixed(2) + ' €';
+        }
+
+        // Versandoptionen
+        document.querySelectorAll('.shipping-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.shipping-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+                
+                const priceText = this.querySelector('.shipping-price').textContent;
+                shippingCost = priceText === 'Kostenlos' ? 0 : parseFloat(priceText.replace(',', '.'));
+                document.getElementById('shipping').textContent = priceText;
+                updateTotals();
+            });
+        });
+
+        // Zahlungsmethoden
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        function placeOrder() {
+            const ageCheck = document.getElementById('ageCheck');
+            if (!ageCheck.checked) {
+                alert('⚠️ Bitte bestätige, dass du mindestens 18 Jahre alt bist.');
+                return;
+            }
+
+            alert('🎉 Bestellung erfolgreich!\n\nEine Bestätigung wurde an deine E-Mail gesendet.');
+        }
+
+        // Initial rendern
+        renderCart();
+    </script>
+</body>
+</html>
