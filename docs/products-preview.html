@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HansHanf - Professionelle Platzhalter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #888;
+            font-size: 1.2em;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+        }
+        
+        .emoji {
+            font-size: 4em;
+            margin-bottom: 10px;
+            z-index: 1;
+        }
+        
+        .strain-name {
+            font-size: 0.9em;
+            color: #00ff88;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            z-index: 1;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .product-details {
+            color: #888;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌿 HansHanf</h1>
+            <p>Weltweit beste Stecklinge von Premium Samenbanken</p>
+            <div class="status" style="margin-top: 20px;">
+                <span class="status-dot"></span>
+                <span>Shop Live - Bilder werden hinzugefügt</span>
+            </div>
+        </div>
+        
+        <div class="products-grid">
+            <!-- AK-47 -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🔫</div>
+                    <div class="strain-name">AK-47</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">AK-47 Simons Cut</div>
+                    <div class="product-details">
+                        THC: 20-25% | Hybrid<br>
+                        Würzig, erdig, holzig<br>
+                        Entspannend, euphorisch
+                    </div>
+                    <span class="badge">Bestseller</span>
+                </div>
+            </div>
+            
+            <!-- Amnesia Haze -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🧠</div>
+                    <div class="strain-name">Amnesia Haze</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Amnesia Haze</div>
+                    <div class="product-details">
+                        THC: 22-25% | Sativa<br>
+                        Zitrus, erdig, süß<br>
+                        Energiegeladen, kreativ
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Black Cherry Punch -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🍒</div>
+                    <div class="strain-name">Black Cherry Punch</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Black Cherry Punch</div>
+                    <div class="product-details">
+                        THC: 20-24% | Indica<br>
+                        Kirsche, beerig, süß<br>
+                        Entspannend, schlaffördernd
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Candy Store -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🍬</div>
+                    <div class="strain-name">Candy Store</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Candy Store</div>
+                    <div class="product-details">
+                        THC: 18-22% | Hybrid<br>
+                        Süß, fruchtig, zucker<br>
+                        Ausgewogen, glücklich
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gorilla Glue -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🦍</div>
+                    <div class="strain-name">Gorilla Glue</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Gorilla Glue #4</div>
+                    <div class="product-details">
+                        THC: 25-30% | Hybrid<br>
+                        Erdig, pine, chemisch<br>
+                        Schwer, entspannend
+                    </div>
+                    <span class="badge">Top Potency</span>
+                </div>
+            </div>
+            
+            <!-- Runtz -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🍭</div>
+                    <div class="strain-name">Runtz</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Runtz</div>
+                    <div class="product-details">
+                        THC: 24-29% | Hybrid<br>
+                        Süß, tropisch, candy<br>
+                        Euphorisch, entspannend
+                    </div>
+                    <span class="badge">Trending</span>
+                </div>
+            </div>
+            
+            <!-- OG Kush -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">👑</div>
+                    <div class="strain-name">OG Kush</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">OG Kush</div>
+                    <div class="product-details">
+                        THC: 20-26% | Hybrid<br>
+                        Erdig, pine, zitrus<br>
+                        Ausgewogen, entspannend
+                    </div>
+                    <span class="badge">Classic</span>
+                </div>
+            </div>
+            
+            <!-- Blue Dream -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">💙</div>
+                    <div class="strain-name">Blue Dream</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Blue Dream</div>
+                    <div class="product-details">
+                        THC: 18-24% | Hybrid<br>
+                        Beere, süß, erdig<br>
+                        Kreativ, entspannt
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Purple Haze -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🟣</div>
+                    <div class="strain-name">Purple Haze</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Purple Haze</div>
+                    <div class="product-details">
+                        THC: 20-24% | Sativa<br>
+                        Süß, beerig, erdig<br>
+                        Euphorisch, energisch
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Northern Lights -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🌌</div>
+                    <div class="strain-name">Northern Lights</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Northern Lights</div>
+                    <div class="product-details">
+                        THC: 16-21% | Indica<br>
+                        Süß, erdig, pine<br>
+                        Schwer entspannend
+                    </div>
+                    <span class="badge">Legend</span>
+                </div>
+            </div>
+            
+            <!-- Gelato -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🍨</div>
+                    <div class="strain-name">Gelato</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Gelato</div>
+                    <div class="product-details">
+                        THC: 20-25% | Hybrid<br>
+                        Süß, cremig, zitrus<br>
+                        Glücklich, entspannt
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Wedding Cake -->
+            <div class="product-card">
+                <div class="image-placeholder">
+                    <div class="emoji">🎂</div>
+                    <div class="strain-name">Wedding Cake</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Wedding Cake</div>
+                    <div class="product-details">
+                        THC: 25-30% | Hybrid<br>
+                        Süß, erdig, vanille<br>
+                        Euphorisch, entspannend
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🌿 HansHanf - Premium Cannabis Stecklinge</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Bilder werden demnächst hinzugefügt | Shop ist voll funktionsfähig</p>
+        </div>
+    </div>
+</body>
+</html>
