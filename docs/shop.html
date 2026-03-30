@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HansHanf Shop - Premium Hanfstecklinge</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+        .logo-text h1 {
+            font-size: 1.4em;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo-text p {
+            font-size: 0.75em;
+            color: #888;
+        }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .stat-label {
+            font-size: 0.75em;
+            color: #888;
+        }
+        
+        /* Product Grid - nur 4 pro Seite */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .product-card:hover {
+            border-color: rgba(0, 255, 136, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
+        }
+        
+        .product-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #2d2d44, #1a1a2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            position: relative;
+        }
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #1a1a2e;
+            font-size: 0.7em;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        .product-type {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0, 100, 255, 0.8);
+            color: white;
+            font-size: 0.75em;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        .product-type.indica { background: rgba(147, 51, 234, 0.8); }
+        .product-type.sativa { background: rgba(249, 115, 22, 0.8); }
+        
+        .product-info {
+            padding: 20px;
+        }
+        .product-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .product-flavor {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-price {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .product-price span {
+            font-size: 0.6em;
+            color: #666;
+            font-weight: normal;
+        }
+        .product-thc {
+            text-align: right;
+        }
+        .product-thc-value {
+            font-weight: 600;
+        }
+        .product-thc-label {
+            font-size: 0.75em;
+            color: #666;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .add-to-cart:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+        .page-btn:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+        .page-btn.active {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #1a1a2e;
+            border-color: transparent;
+            font-weight: 600;
+        }
+        .page-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-info {
+            color: #888;
+            font-size: 0.9em;
+            margin: 0 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-text {
+            color: #666;
+            font-size: 0.85em;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .footer-links a {
+            color: #00ff88;
+            text-decoration: none;
+            font-size: 0.85em;
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #888;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #00ff88;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .stats {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🌿</div>
+                <div class="logo-text">
+                    <h1>HansHanf</h1>
+                    <p>Premium Hanfstecklinge</p>
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value">25</div>
+                    <div class="stat-label">Sorten</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Pro Seite</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="products-container" class="products-grid">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Produkte werden geladen...</p>
+            </div>
+        </div>
+        
+        <div id="pagination" class="pagination">
+            <!-- Pagination wird per JavaScript eingefügt -->
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">© 2025 HansHanf - Premium Hanfstecklinge</p>
+            <p class="footer-text" style="margin-top: 10px;">Nur für Personen ab 18 Jahren</p>
+            <div class="footer-links">
+                <a href="/hanshanf/">Hauptseite</a>
+                <a href="/hanshanf/checkout.html">Checkout</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Alle 25 Sorten
+        const products = [
+            { id: 1, name: 'AK-47 Simons Cut', emoji: '🔫', flavor: 'würzig, erdig, holzig', thc: '20-24%', type: 'Hybrid', price: 18.00, badge: 'Bestseller' },
+            { id: 2, name: 'Amnesia Core Cut', emoji: '🧠', flavor: 'erdig, Zitrus, Haze', thc: '22-25%', type: 'Sativa', price: 19.00, badge: 'Premium' },
+            { id: 3, name: 'Amnesia Master Core Cut', emoji: '🧠', flavor: 'intensiv Haze, Zitrus', thc: '24-26%', type: 'Sativa', price: 21.00, badge: 'Limitiert' },
+            { id: 4, name: 'Black Cherry Punch', emoji: '🍒', flavor: 'süß, Kirsche, fruchtig', thc: '18-22%', type: 'Indica', price: 17.00, badge: null },
+            { id: 5, name: 'Candy Store', emoji: '🍬', flavor: 'süß, Karamell, fruchtig', thc: '19-23%', type: 'Hybrid', price: 16.00, badge: null },
+            { id: 6, name: 'Cap Junky', emoji: '🦍', flavor: 'Gas, Minze, Cookies', thc: '25-28%', type: 'Hybrid', price: 20.00, badge: 'Neu' },
+            { id: 7, name: 'Fizzy Bubble Gum', emoji: '🍭', flavor: 'Kaugummi, süß, fruchtig', thc: '16-20%', type: 'Hybrid', price: 15.00, badge: null },
+            { id: 8, name: 'Gelato #45', emoji: '🍨', flavor: 'süß, Zitrus, Beeren', thc: '20-25%', type: 'Hybrid', price: 18.00, badge: 'Favorite' },
+            { id: 9, name: 'Imperium X (Knolli Cut)', emoji: '👑', flavor: 'Gas, Zitrus, erdig', thc: '26-30%', type: 'Hybrid', price: 21.00, badge: 'Top Shelf' },
+            { id: 10, name: 'Jokerz 31', emoji: '🃏', flavor: 'Gas, süß, fruchtig', thc: '22-26%', type: 'Hybrid', price: 19.00, badge: null },
+            { id: 11, name: 'Kush Mintz', emoji: '🌿', flavor: 'Minze, erdig, süß', thc: '20-24%', type: 'Hybrid', price: 18.00, badge: null },
+            { id: 12, name: 'La Bomba', emoji: '💣', flavor: 'skunky, süß, erdig', thc: '18-22%', type: 'Indica', price: 17.00, badge: null },
+            { id: 13, name: 'Lilac Cookies', emoji: '🌸', flavor: 'Flieder, süß, Cookies', thc: '22-26%', type: 'Hybrid', price: 19.00, badge: 'Premium' },
+            { id: 14, name: 'Mimosa x Orange Punch', emoji: '🍊', flavor: 'Orange, Zitrus, fruchtig', thc: '20-24%', type: 'Sativa', price: 18.00, badge: null },
+            { id: 15, name: 'Permanent Marker', emoji: '🖊️', flavor: 'chemisch, süß, scharf', thc: '24-28%', type: 'Hybrid', price: 20.00, badge: 'Exklusiv' },
+            { id: 16, name: 'Peyote Cookies', emoji: '🍪', flavor: 'Kaffee, süß, erdig', thc: '20-24%', type: 'Indica', price: 18.00, badge: null },
+            { id: 17, name: 'Power Plant', emoji: '⚡', flavor: 'erdig, holzig, würzig', thc: '15-20%', type: 'Sativa', price: 14.00, badge: 'Günstig' },
+            { id: 18, name: 'Rainbow Sherbet #11', emoji: '🌈', flavor: 'tropisch, süß, fruchtig', thc: '22-26%', type: 'Hybrid', price: 19.00, badge: null },
+            { id: 19, name: 'Sherb Cream Pie', emoji: '🥧', flavor: 'cremig, süß, Beeren', thc: '20-24%', type: 'Hybrid', price: 18.00, badge: null },
+            { id: 20, name: 'Sleepy Joe', emoji: '😴', flavor: 'erdig, süß, Pinie', thc: '18-22%', type: 'Indica', price: 16.00, badge: 'Nacht' },
+            { id: 21, name: 'Super Buff Cherry', emoji: '🍒', flavor: 'Kirsche, süß, fruchtig', thc: '20-23%', type: 'Hybrid', price: 17.00, badge: null },
+            { id: 22, name: 'Super Orange Glue', emoji: '🍊', flavor: 'Orange, Zitrus, Klebstoff', thc: '20-24%', type: 'Hybrid', price: 17.00, badge: null },
+            { id: 23, name: 'Super Silver Haze', emoji: '✨', flavor: 'Zitrus, würzig, Haze', thc: '20-24%', type: 'Sativa', price: 18.00, badge: 'Klassiker' },
+            { id: 24, name: 'Wedding Cake', emoji: '🎂', flavor: 'süß, Vanille, Creme', thc: '22-26%', type: 'Indica', price: 18.00, badge: 'Beliebt' },
+            { id: 25, name: 'White Russian', emoji: '⚪', flavor: 'Zitrus, süß, erdig', thc: '18-22%', type: 'Hybrid', price: 15.00, badge: null }
+        ];
+
+        // Pagination Einstellungen
+        const ITEMS_PER_PAGE = 4;
+        let currentPage = 1;
+
+        function getTypeClass(type) {
+            const map = { 'Indica': 'indica', 'Sativa': 'sativa', 'Hybrid': '' };
+            return map[type] || '';
+        }
+
+        function renderProducts(page) {
+            const container = document.getElementById('products-container');
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            const pageProducts = products.slice(start, end);
+
+            container.innerHTML = pageProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.emoji}
+                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                        <span class="product-type ${getTypeClass(product.type)}">${product.type}</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-flavor">${product.flavor}</div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                €${product.price.toFixed(2)}
+                                <span>/ Steckling</span>
+                            </div>
+                            <div class="product-thc">
+                                <div class="product-thc-value">${product.thc}</div>
+                                <div class="product-thc-label">THC</div>
+                            </div>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">
+                            ➕ In den Warenkorb
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPagination() {
+            const container = document.getElementById('pagination');
+            const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+            
+            let html = `
+                <button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    ← Zurück
+                </button>
+            `;
+            
+            for (let i = 1; i <= totalPages; i++) {
+                html += `
+                    <button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+                        ${i}
+                    </button>
+                `;
+            }
+            
+            html += `
+                <button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Weiter →
+                </button>
+            `;
+            
+            html += `<span class="page-info">Seite ${currentPage} von ${totalPages}</span>`;
+            
+            container.innerHTML = html;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderProducts(currentPage);
+            renderPagination();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            alert(`✅ "${product.name}" wurde zum Warenkorb hinzugefügt!`);
+        }
+
+        // Initial render
+        renderProducts(currentPage);
+        renderPagination();
+    </script>
+</body>
+</html>
