@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "cart": "Warenkorb",
+    "checkout": "Checkout",
+    "account": "Konto",
+    "language": "Sprache"
+  },
+  "home": {
+    "title": "Willkommen beim Hanfstecklinge Shop",
+    "subtitle": "Premium Hanfstecklinge mit 25 Sorten"
+  },
+  "product": {
+    "addToCart": "In den Warenkorb",
+    "price": "Preis",
+    "description": "Beschreibung",
+    "effects": "Wirkung",
+    "equipmentNeeded": "Benötigte Ausrüstung"
+  },
+  "cart": {
+    "title": "Ihr Warenkorb",
+    "empty": "Ihr Warenkorb ist leer",
+    "total": "Gesamt",
+    "proceedToCheckout": "Zur Kasse gehen"
+  },
+  "checkout": {
+    "title": "Kasse",
+    "placeOrder": "Bestellung aufgeben",
+    "paymentMethod": "Zahlungsmethode",
+    "email": "E-Mail",
+    "name": "Name",
+    "address": "Adresse"
+  },
+  "newsletter": {
+    "title": "Newsletter abonnieren",
+    "placeholder": "Ihre E-Mail-Adresse",
+    "submit": "Abonnieren",
+    "success": "Danke für deine Anmeldung!",
+    "error": "Etwas ist schiefgelaufen. Bitte versuche es später erneut."
+  },
+  "aiAdvisor": {
+    "title": "Hanfstecklinge-Berater",
+    "description": "Beantworte ein paar Fragen, um die perfekte Sorte und das passende Equipment zu finden.",
+    "start": "Beratung starten",
+    "question1": "Wie ist deine Anbau-Erfahrung?",
+    "question2": "Wie viel Platz hast du zur Verfügung?",
+    "question3": "Welche Lichtquelle nutzt du bzw. planst du zu nutzen?",
+    "question4": "Welche Wirkung erwartest du?",
+    "question5": "Welche Ausrüstung besitzt du bereits?",
+    "result": "Empfehlung",
+    "recommendedStrain": "Empfohlene Sorte",
+    "recommendedEquipment": "Empfohlenes Equipment",
+    "note": "Bitte beachte die geltenden Gesetze in deinem Land."
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "AGB"
+  }
+}

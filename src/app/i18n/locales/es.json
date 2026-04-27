@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "cart": "Carrito",
+    "checkout": "Pago",
+    "account": "Cuenta",
+    "language": "Idioma"
+  },
+  "home": {
+    "title": "Bienvenido a la tienda de Hanfstecklinge",
+    "subtitle": "Hanfstecklinge premium con 25 variedades"
+  },
+  "product": {
+    "addToCart": "Añadir al carrito",
+    "price": "Precio",
+    "description": "Descripción",
+    "effects": "Efectos",
+    "equipmentNeeded": "Equipo necesario"
+  },
+  "cart": {
+    "title": "Tu carrito",
+    "empty": "Tu carrito está vacío",
+    "total": "Total",
+    "proceedToCheckout": "Proceder al pago"
+  },
+  "checkout": {
+    "title": "Pago",
+    "placeOrder": "Realizar pedido",
+    "paymentMethod": "Método de pago",
+    "email": "Correo electrónico",
+    "name": "Nombre",
+    "address": "Dirección"
+  },
+  "newsletter": {
+    "title": "Suscríbete al boletín",
+    "placeholder": "Tu dirección de correo",
+    "submit": "Suscribirse",
+    "success": "¡Gracias por tu suscripción!",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo más tarde."
+  },
+  "aiAdvisor": {
+    "title": "Asesor de Hanfstecklinge",
+    "description": "Responde unas preguntas para encontrar la variedad y el equipo perfectos.",
+    "start": "Iniciar asesoría",
+    "question1": "¿Cuál es tu experiencia en cultivo?",
+    "question2": "¿Cuánto espacio tienes disponible?",
+    "question3": "¿Qué fuente de luz utilizas o planeas utilizar?",
+    "question4": "¿Qué efecto esperas?",
+    "question5": "¿Qué equipo ya posees?",
+    "result": "Recomendación",
+    "recommendedStrain": "Variedad recomendada",
+    "recommendedEquipment": "Equipo recomendado",
+    "note": "Ten en cuenta las leyes vigentes en tu país."
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio"
+  }
+}

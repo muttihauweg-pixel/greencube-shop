@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart",
+    "checkout": "Checkout",
+    "account": "Account",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Welcome to the Hanfstecklinge Shop",
+    "subtitle": "Premium Hanfstecklinge with 25 Strains"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "price": "Price",
+    "description": "Description",
+    "effects": "Effects",
+    "equipmentNeeded": "Equipment Needed"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "proceedToCheckout": "Proceed to Checkout"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "placeOrder": "Place Order",
+    "paymentMethod": "Payment Method",
+    "email": "Email",
+    "name": "Name",
+    "address": "Address"
+  },
+  "newsletter": {
+    "title": "Subscribe to Newsletter",
+    "placeholder": "Your email address",
+    "submit": "Subscribe",
+    "success": "Thanks for subscribing!",
+    "error": "Something went wrong. Please try again later."
+  },
+  "aiAdvisor": {
+    "title": "Hanfstecklinge Advisor",
+    "description": "Answer a few questions to find the perfect strain and equipment.",
+    "start": "Start Advisor",
+    "question1": "What is your growing experience?",
+    "question2": "How much space do you have available?",
+    "question3": "What light source do you use or plan to use?",
+    "question4": "What effect are you expecting?",
+    "question5": "What equipment do you already own?",
+    "result": "Recommendation",
+    "recommendedStrain": "Recommended Strain",
+    "recommendedEquipment": "Recommended Equipment",
+    "note": "Please note the applicable laws in your country."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}
